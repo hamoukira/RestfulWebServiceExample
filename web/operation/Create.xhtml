@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="OperationCreateDlg" widgetVar="OperationCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateOperationTitle}">
+            <h:form id="OperationCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{operationController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateOperationLabel_compte}" for="compte" />
+                        <p:inputText id="compte" value="#{operationController.selected.compte.rib}" />
+                        <p:outputLabel value="#{bundle.CreateOperationLabel_type}" for="type" />
+                        <p:selectOneMenu id="type" value="#{operationController.selected.type}" >
+                            <f:selectItem itemValue="" itemLabel="--SELECT--"/>
+                            <f:selectItem itemValue="1" itemLabel="credite"/>
+                            <f:selectItem itemValue="2" itemLabel="debite"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateOperationLabel_montant}" for="montant" />
+                        <p:inputText id="montant" value="#{operationController.selected.montant}" title="#{bundle.CreateOperationTitle_montant}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{operationController.create}" value="#{bundle.Save}" update="display,:OperationListForm:datalist,:growl" oncomplete="handleSubmit(args,'OperationCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="OperationCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
